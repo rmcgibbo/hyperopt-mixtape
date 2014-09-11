@@ -1,9 +1,9 @@
-startdb:
-	mongod --dbpath db --port 1234 --directoryperdb --journal --nohttpinterface --logpath mongo-logfile.txt &
+MONGO=mongodb://hyperopt:hyperopt@kahana.mongohq.com:10090/hyperopt-mixtape
+EXP_KEY=$(shell sha1sum experiment.py | awk '{print $$1}')
 
 startserver:
-	python optimize.py &
+	PYTHONPATH='.' python -c 'from experiment import main; main()' --mongo=$(MONGO) --exp-key=$(EXP_KEY)
 
 runworker:
-	PYTHONPATH='.' hyperopt-mongo-worker --mongo=localhost:1234/met-enk --poll-interval=0.1 --workdir=workdir
+	PYTHONPATH='.' hyperopt-mongo-worker --mongo=$(MONGO) --exp-key=$(EXP_KEY) --workdir=workdir
 
