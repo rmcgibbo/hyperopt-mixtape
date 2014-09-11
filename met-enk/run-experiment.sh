@@ -7,6 +7,6 @@
 cd $PBS_O_WORKDIR
 
 
-make startserver &
+make startserver >| server.log 2>&1 &
 sleep 10
-mpirun -np 5 make runworker
+mpirun -np 15 make runworker >| worker.log 2>&1

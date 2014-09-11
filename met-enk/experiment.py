@@ -26,7 +26,7 @@ def main():
     args = parser.parse_args()
 
     trials = MongoTrials(args.mongo, exp_key=args.exp_key)
-    best = fmin(fit_and_score, modelspace, trials=trials, algo=tpe.suggest, max_evals=100)
+    best = fmin(fit_and_score, modelspace, trials=trials, algo=tpe.suggest, max_evals=500)
 
 
 modelspace = {'_factory': pipelineFactory,
