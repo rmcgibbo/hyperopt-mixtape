@@ -7,3 +7,5 @@ startserver:
 runworker:
 	PYTHONPATH='.' hyperopt-mongo-worker --mongo=$(MONGO) --exp-key=$(EXP_KEY) --workdir=workdir
 
+interact:
+	python -c 'import sys, IPython; from hyperopt.mongoexp import MongoTrials; trials=MongoTrials(sys.argv[1], sys.argv[2]); IPython.embed()' $(MONGO) $(EXP_KEY)
