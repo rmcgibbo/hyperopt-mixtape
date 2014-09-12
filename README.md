@@ -42,7 +42,7 @@ Files
 Each experiment in this project is one of the subdirectories, and it includes
 three key files
 
-- experiment.py
+- `experiment.py`
     This file contains all the science. The search space is declared inside as
     a prior distribution over MSM hyperparameters, defined using hyperopt
     syntax and some unfortunate factory classes. The objective function (e.g.
@@ -53,7 +53,7 @@ three key files
     Note: When `main()` gets called, the system just blocks. "Workers" need to
     connect to the minimizer to actually get anything _done_.
 
-- Makefile
+- `Makefile`
     The makefile mostly serves to shorten otherwise long and unwieldy command
     line invocations.
     
@@ -64,6 +64,6 @@ three key files
     are targeted towards the appropriate project by specifying the connection
     string to the mongo DB instance and a particular experiment key.
     
-- run-experiment.sh
+- `run-experiment.sh`
     Simple PBS script to automate the process of starting the server and then
     running many workers on a cluster.
