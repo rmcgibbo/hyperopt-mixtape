@@ -1,4 +1,6 @@
+import numpy as np
 from sklearn.pipeline import Pipeline
+from sklearn.kernel_approximation import Nystroem as _Nystroem
 
 
 def modelFactory(arg):
@@ -30,3 +32,13 @@ def pipelineFactory(args):
             step = s['_factory'](s)
             steps.append((step.__class__.__name__, step))
     return Pipeline(steps)
+
+
+class Nystroem(_Nystroem):
+    def fit(self, sequences, y=None):
+        return super(Nystroem, self).fit(np.concatenate(sequences))
+
+    def transform(self, sequences):
+        trans = super(Nystroem, self).transform
+        y = [trans(X) for X in sequences]
+        return y
