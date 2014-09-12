@@ -9,3 +9,6 @@ runworker:
 
 interact:
 	python -c 'import sys, IPython; from hyperopt.mongoexp import MongoTrials; trials=MongoTrials(sys.argv[1], sys.argv[2]); IPython.embed()' $(MONGO) $(EXP_KEY)
+
+saveresults:
+	python -c 'import sys; import json; from bson.json_util import default; from hyperopt.mongoexp import MongoTrials; trials = MongoTrials(sys.argv[1], sys.argv[2]); json.dumps(trials.trials, open("results-%s.json" % sys.argv[2][:7], "w"), default=default)' $(MONGO) $(EXP_KEY)
