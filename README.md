@@ -5,7 +5,7 @@ Experiments/WIP for using [hyperopt](https://github.com/hyperopt/hyperopt)
 and [mixtape](https://github.com/rmcgibbo/mixtape) together to optimize Markov
 state models.
 
-install
+Install
 -------
 1. Get my [hacked version](https://github.com/rmcgibbo/hyperopt) of hyperopt.
 2. Get the latest version of mixtape
@@ -16,23 +16,27 @@ install
 4. Go into the `hpmixtape` directory in this project, and install it.
 
 
-running
+Running
 -------
 the job of the server is basically to orchestrate the experiment and choose
 the parameter settings for the workers. boot up the server with:
-`$ make startserver`
+```
+$ make startserver
+```
 
 then run one or more workers
-`$ make runworker`
-`$ make runworker`
-etc.
-`$ make runworker`
+```
+$ make runworker
+$ make runworker
+# etc...
+$ make runworker
+```
 
 Some of this is automated by the `run-experiment.sh` script, which submits
 a job which make
 
 
-files
+Files
 -----
 
 Each experiment in this project is one of the subdirectories, and it includes
