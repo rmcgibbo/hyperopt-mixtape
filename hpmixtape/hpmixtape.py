@@ -1,7 +1,33 @@
 import numpy as np
+from hyperopt import base, pyll
 from sklearn.pipeline import Pipeline
 from sklearn.kernel_approximation import Nystroem as _Nystroem
 
+def trial_to_fninval(trial, space):
+    """Instantiate a particular element from the pyll space
+
+    Example
+    -------
+    >>> space = ...
+    >>> trials = ...
+    >>> fmin(fn, space=space, trials=trials)
+
+    # Now, let's say we want to get the input value
+    # to `fn` that was used in the first trial:
+    >>> inval = trial_to_fninval(trails.trials[0], space)
+
+    # and then, e.g.:
+    >>> fn(inval)
+    """
+    # this code comes from hyperopt.base.Domain.evaluate and
+    # hyperopt.base.Domain.memo_from_config
+    config = base.spec_from_misc(trial['misc'])
+    memo = {}
+    for node in pyll.dfs(pyll.as_apply(space)):
+        if node.name == 'hyperopt_param':
+            label = node.arg['label'].obj
+            memo[node] = config.get(label, pyll.base.GarbageCollected)
+    return pyll.rec_eval(space, memo=memo)
 
 def modelFactory(arg):
     assert modelFactory == arg.pop('_factory')
@@ -42,3 +68,4 @@ class Nystroem(_Nystroem):
         trans = super(Nystroem, self).transform
         y = [trans(X) for X in sequences]
         return y
+
