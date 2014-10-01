@@ -1,6 +1,7 @@
 import numpy as np
 from hyperopt import base, pyll
 from sklearn.pipeline import Pipeline
+from sklearn.base import BaseEstimator
 from sklearn.kernel_approximation import Nystroem as _Nystroem
 
 def trial_to_fninval(trial, space):
@@ -57,6 +58,8 @@ def pipelineFactory(args):
         if isinstance(s, dict) and '_factory' in s:
             step = s['_factory'](s)
             steps.append((step.__class__.__name__, step))
+        elif isinstance(s, BaseEstimator):
+            steps.append((s.__class__.__name__, s))
     return Pipeline(steps)
 
 
